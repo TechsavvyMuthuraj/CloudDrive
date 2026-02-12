@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
     const login = async () => {
         // Get Auth URL from backend
         try {
-            const response = await fetch('http://localhost:3000/api/auth/url');
+            const response = await fetch('https://clouddrive-o572.onrender.com/api/auth/url');
             const data = await response.json();
             window.location.href = data.url;
         } catch (error) {

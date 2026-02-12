@@ -23,7 +23,7 @@ const Dashboard = () => {
   React.useEffect(() => {
     const fetchFiles = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/files/list', {
+        const response = await fetch('https://clouddrive-o572.onrender.com/api/files/list', {
           headers: {
             'Authorization': `Bearer ${user.token}`
           }
@@ -59,7 +59,7 @@ const Dashboard = () => {
 
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:3000/api/files/upload', {
+      const response = await fetch('https://clouddrive-o572.onrender.com/api/files/upload', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${user.token}`
@@ -82,7 +82,7 @@ const Dashboard = () => {
 
   const handleDownload = async (fileId, fileName) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/files/download/${fileId}`, {
+      const response = await fetch(`https://clouddrive-o572.onrender.com/api/files/download/${fileId}`, {
         headers: {
           'Authorization': `Bearer ${user.token}`
         }
@@ -107,7 +107,7 @@ const Dashboard = () => {
   const handleDelete = async (fileId) => {
     if (!window.confirm('Are you sure you want to delete this file?')) return;
     try {
-      const response = await fetch(`http://localhost:3000/api/files/delete/${fileId}`, {
+      const response = await fetch(`https://clouddrive-o572.onrender.com/api/files/delete/${fileId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${user.token}`
