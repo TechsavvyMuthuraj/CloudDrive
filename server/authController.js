@@ -8,43 +8,44 @@ const oauth2Client = new google.auth.OAuth2(
   "https://clouddrive-o572.onrender.com/api/auth/callback"
 );
 
-
 const SCOPES = [
-    'https://www.googleapis.com/auth/drive.file',
-    'https://www.googleapis.com/auth/userinfo.profile',
-    'https://www.googleapis.com/auth/userinfo.email'
+  'https://www.googleapis.com/auth/drive.file',
+  'https://www.googleapis.com/auth/userinfo.profile',
+  'https://www.googleapis.com/auth/userinfo.email',
+  'openid'
 ];
 
+// Step 1: Get Google Auth URL
 router.get('/url', (req, res) => {
-    const url = oauth2Client.generateAuthUrl({
-        access_type: 'offline',
-        scope: SCOPES,
-        prompt: 'consent' // Force to get refresh token
-    });
-    res.json({ url });
+  const url = oauth2Client.generateAuthUrl({
+    access_type: 'offline',
+    scope: SCOPES,
+    prompt: 'consent'
+  });
+  res.json({ url });
 });
 
+// Step 2: Google Callback
 router.get('/callback', async (req, res) => {
-    const { code } = req.query;
-    if (!code) {
-        return res.status(400).send('No code provided');
-    }
+  const { code } = req.query;
 
-    try {
-        const { tokens } = await oauth2Client.getToken(code);
-        oauth2Client.setCredentials(tokens);
+  if (!code) {
+    return res.status(400).send('No code provided');
+  }
 
-        // In a real app, you'd save these tokens to a DB associated with a session or user
-        // For this simple clone, we might just pass them back to frontend or store in memory (not recommended for prod)
-        // But better: Redirect to frontend with tokens in URL (insecure but simple for demo) or set HTTPOnly cookie.
+  try {
+    const { tokens } = await oauth2Client.getToken(code);
+    oauth2Client.setCredentials(tokens);
 
-        // Let's redirect to frontend with access_token
-       res.redirect(`https://cloud-drive-ivory.vercel.app/auth-success?access_token=${tokens.access_token}&refresh_token=${tokens.refresh_token}&expiry_date=${tokens.expiry_date}`);
+    // Redirect to frontend
+    res.redirect(
+      `https://cloud-drive-ivory.vercel.app/auth-success?access_token=${tokens.access_token}`
+    );
 
-    } catch (error) {
-        console.error('Error retrieving access token', error);
-        res.status(500).send('Authentication failed');
-    }
+  } catch (error) {
+    console.error('Error retrieving access token', error);
+    res.status(500).send('Authentication failed');
+  }
 });
 
 module.exports = { router, oauth2Client };
