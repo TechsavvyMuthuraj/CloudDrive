@@ -3,10 +3,11 @@ const { google } = require('googleapis');
 const router = express.Router();
 
 const oauth2Client = new google.auth.OAuth2(
-    process.env.GOOGLE_CLIENT_ID,
-    process.env.GOOGLE_CLIENT_SECRET,
-    process.env.REDIRECT_URI
+  process.env.GOOGLE_CLIENT_ID,
+  process.env.GOOGLE_CLIENT_SECRET,
+  "https://clouddrive-o572.onrender.com/api/auth/callback"
 );
+
 
 const SCOPES = [
     'https://www.googleapis.com/auth/drive.file',
