@@ -38,7 +38,7 @@ router.get('/callback', async (req, res) => {
         // But better: Redirect to frontend with tokens in URL (insecure but simple for demo) or set HTTPOnly cookie.
 
         // Let's redirect to frontend with access_token
-        res.redirect(`http://localhost:5174/auth-success?access_token=${tokens.access_token}&refresh_token=${tokens.refresh_token}&expiry_date=${tokens.expiry_date}`);
+        res.redirect(`https://clouddrive-o572.onrender.com/auth-success?access_token=${tokens.access_token}&refresh_token=${tokens.refresh_token}&expiry_date=${tokens.expiry_date}`);
 
     } catch (error) {
         console.error('Error retrieving access token', error);
