@@ -7,6 +7,10 @@ import Layout from './components/Layout';
 import FileCard from './components/FileCard';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from './utils/cn';
+import AuthSuccess from "./pages/AuthSuccess";
+
+<Route path="/auth-success" element={<AuthSuccess />} />
+
 
 const PrivateRoute = ({ children }) => {
   const { user } = useAuth();
@@ -186,7 +190,10 @@ function App() {
         <Router>
           <Routes>
             <Route path="/login" element={<Login />} />
-            <Route path="/auth-success" element={<Navigate to="/" />} />
+
+            {/* Correct Auth Success Route */}
+            <Route path="/auth-success" element={<AuthSuccess />} />
+
             <Route
               path="/"
               element={
@@ -201,5 +208,6 @@ function App() {
     </AuthProvider>
   );
 }
+
 
 export default App;
